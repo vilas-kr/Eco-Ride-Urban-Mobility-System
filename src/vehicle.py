@@ -1,4 +1,5 @@
-class Vehicle:
+from abc import ABC, abstractmethod
+class Vehicle(ABC):
     
     def __init__(self, id, model, battery_percentage):
         self.id = id
@@ -31,9 +32,14 @@ class Vehicle:
     def battery_percentage(self, battery_percentage):
         if 0 <= battery_percentage <= 100:
             self.__battery_percentage = battery_percentage 
-        else:    
-            self.__battery_percentage = None  
+        else:      
             raise ValueError("Battery percentage should be between 0 and 100")
+     
+    @abstractmethod   
+    def calculate_trip_cost(self, distance):
+        pass
+        
+    
         
         
 
