@@ -37,6 +37,17 @@ class Vehicle(ABC):
      
     @abstractmethod   
     def calculate_trip_cost(self, distance):
+        '''
+        Parameter
+        ---------
+        distance : int
+            total distance in kilometers
+        
+        Returns
+        -------
+        rent : float
+            calculate total rent based on distance
+        '''
         pass
         
     
