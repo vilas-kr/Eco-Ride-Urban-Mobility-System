@@ -112,7 +112,32 @@ class EcoRideMain:
             return []
         return list(filter(lambda obj : obj.battery_percentage > 80, EcoRideMain.hubs[hub_name]))
         
-            
+    def group_vehicles_by_type(self):
+        """
+        Groups all vehicles across hubs by their type.
+
+        Returns
+        -------
+        dict
+            Mapping of vehicle type to list of vehicles.
+            Example:
+            {
+                "CAR": [...],
+                "SCOOTER": [...]
+            }
+        """
+        vehicle_type = {
+            "CAR": [],
+            "SCOOTER": []
+        }       
+        for vehicles in EcoRideMain.hubs.values():
+            for vehicle in vehicles:
+                if isinstance(vehicle, ElectricCar):
+                    vehicle_type["CAR"].append(vehicle)
+                elif isinstance(vehicle, ElectricScooter):
+                    vehicle_type["SCOOTER"].append(vehicle)
+        
+        return vehicle_type
 
 
      
