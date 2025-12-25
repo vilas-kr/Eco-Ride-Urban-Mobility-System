@@ -50,6 +50,11 @@ class Vehicle(ABC):
         '''
         pass
     
+    def __eq__(self, other):
+        if not isinstance(other, Vehicle):
+            return False
+        return self.id == other.id
+    
         
     
         
