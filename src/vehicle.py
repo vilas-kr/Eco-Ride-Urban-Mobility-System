@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 class Vehicle(ABC):
     
-    def __init__(self, id, model, battery_percentage):
+    def __init__(self, id, model: str, battery_percentage: int):
         self.id = id
         self.model = model
         self.battery_percentage = battery_percentage
@@ -21,7 +21,7 @@ class Vehicle(ABC):
         return self.__rental_price
     
     @rental_price.setter
-    def rental_price(self, rental_price):
+    def rental_price(self, rental_price: float):
         self.__rental_price = rental_price
     
     @property
@@ -29,7 +29,7 @@ class Vehicle(ABC):
         return self.__battery_percentage
         
     @battery_percentage.setter
-    def battery_percentage(self, battery_percentage):
+    def battery_percentage(self, battery_percentage: int):
         if 0 <= battery_percentage <= 100:
             self.__battery_percentage = battery_percentage 
         else:      
@@ -49,6 +49,7 @@ class Vehicle(ABC):
             calculate total rent based on distance
         '''
         pass
+    
         
     
         
