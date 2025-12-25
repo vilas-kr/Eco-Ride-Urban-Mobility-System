@@ -79,7 +79,7 @@ class EcoRideMain:
         Parameter
         ---------
         hub_name : str
-            The name of the hun you want to check in hub registry
+            The name of the hub you want to check in hubs registry
             
         Returns
         -------
@@ -93,6 +93,26 @@ class EcoRideMain:
             return True
         return False
     
+    def search_by_battery(self, hub_name: str):
+        '''
+        Returns vehicles with battery percentage greater than 80
+        from the specified hub
+        
+        Parameter
+        ---------
+        hub_name: str
+            The name of the hub you want to search in hubs registry
+        
+        Returns
+        -------
+        vehicles : list of Vehicles
+            vehicles which have more than 80 percent battery in the specified hub
+        '''
+        if not self.check_hub(hub_name):
+            return []
+        return list(filter(lambda obj : obj.battery_percentage > 80, EcoRideMain.hubs[hub_name]))
+        
+            
 
 
      
