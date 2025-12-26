@@ -225,7 +225,7 @@ class EcoRideMain:
             writer = csv.writer(f)
             #header
             writer.writerow([
-                "hub_name", "vehicle_id", "vehicle_type",
+                "hub_name", "id", "type",
                 "model", "battery_percentage", "maintenance_status", "rental_price", "extra"
             ])
 
@@ -237,7 +237,7 @@ class EcoRideMain:
                         v.__class__.__name__,
                         v.model,
                         v.battery_percentage,
-                        v.maintenance_status.name if v.maintenance_status else "UNKNOWN",
+                        v.maintenance_status.name if v.maintenance_status else None,
                         v.rental_price,
                         v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit
                     ])
@@ -257,23 +257,16 @@ class EcoRideMain:
                     if hub_name not in EcoRideMain.hubs:
                         self.add_hub(hub_name)
 
-                    vehicle_type = row["vehicle_type"]
-                    vehicle_id = row["vehicle_id"]
-                    model = row["model"]
-                    battery = int(row["battery_percentage"])
-                    status = Status[row["maintenance_status"]]
-                    rental_price = row['rental_price']
-
-
+                    vehicle_type = row['type']
                     # recreate correct object
                     if vehicle_type == "ElectricCar":
-                        vehicle = ElectricCar(vehicle_id, model, battery, row['extra'])
+                        vehicle = ElectricCar(row["id"], row['model'], int(row["battery_percentage"]), int(row['extra']))
                     elif vehicle_type == "ElectricScooter":
-                        vehicle = ElectricScooter(vehicle_id, model, battery, row['extra'])
+                        vehicle = ElectricScooter(row["id"], row['model'], int(row["battery_percentage"]), int(row['extra']))
                     else:
                         continue
-                    vehicle.maintenance_status = status
-                    vehicle.rental_price = rental_price
+                    vehicle.maintenance_status = Status[row["maintenance_status"]]
+                    vehicle.rental_price = float(row["rental_price"])
                     self.add_vehicle(hub_name, vehicle)
 
         except FileNotFoundError:
@@ -316,11 +309,6 @@ class EcoRideMain:
         except FileNotFoundError as e:
             print(e)
                 
-        
-    
-e = EcoRideMain()
-e.load_hub_registry_from_json()
-e.vehicle_maintenance_status('Hubli')
 
 
                     
