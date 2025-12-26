@@ -279,7 +279,46 @@ class EcoRideMain:
         except FileNotFoundError:
             print("No existing fleet data found. Starting fresh.")
     
+    def save_hub_registry_to_json(self):
+        '''
+        Store hub registry in the json file
+        '''
+        with open("hub_data.json", "w") as f:
+            json.dump({hub_name : [vehicle.to_dict() for vehicle in EcoRideMain.hubs[hub_name]] for hub_name in EcoRideMain.hubs}, f, indent=4)
+        
+    def load_hub_registry_from_json(self):
+        '''
+        load object from the hub registory
+        '''
+        try:
+            with open("hub_data.json", "r") as f:
+                data = json.load(f)
+            
+            for hub_name in data:
+                #Create if hub not present
+                if not self.check_hub(hub_name):
+                    self.add_hub(hub_name)
+                
+                #Initialize all vehicle objects in each hub
+                for v in data[hub_name]:
+                    vehicle = None
+                    if v['type'] == 'ElectricCar':
+                        vehicle = ElectricCar(v['id'], v['model'], int(v['battery_percentage']), int(v['seating_capacity']))
+                    elif v['type'] == 'ElectricScooter':
+                        vehicle = ElectricScooter(v['id'], v['model'], int(v['battery_percentage']), int(v['max_speed_limit']))
+                        
+                    vehicle.maintenance_status = Status[v['maintenance_status']]
+                    vehicle.rental_price = float(v['rental_price'])
+                    self.add_vehicle(hub_name, vehicle)
+                    
+        except FileNotFoundError as e:
+            print(e)
+                
+        
     
+e = EcoRideMain()
+e.load_hub_registry_from_json()
+e.vehicle_maintenance_status('Hubli')
 
 
                     

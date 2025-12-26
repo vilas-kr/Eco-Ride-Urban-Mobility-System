@@ -3,7 +3,7 @@ from status import Status
 
 class Vehicle(ABC):
     
-    def __init__(self, id, model: str, battery_percentage: int):
+    def __init__(self, id: str, model: str, battery_percentage: int):
         self.id = id
         self.model = model
         self.battery_percentage = battery_percentage
@@ -38,7 +38,7 @@ class Vehicle(ABC):
             raise ValueError("Battery percentage should be between 0 and 100")
      
     @abstractmethod   
-    def calculate_trip_cost(self, distance):
+    def calculate_trip_cost(self, distance: int):
         '''
         Parameter
         ---------
@@ -65,6 +65,14 @@ class Vehicle(ABC):
     def __str__(self):
         return f"ID: {self.id}   Model: {self.model}    Battery Percentage: {self.battery_percentage}"
     
-        
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'type' : self.__class__.__name__,
+            'model' : self.model,
+            'battery_percentage' : self.battery_percentage,
+            'maintenance_status' : self.maintenance_status.name if self.maintenance_status else None,
+            'rental_price' : self.rental_price
+        }
         
 
