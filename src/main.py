@@ -171,8 +171,30 @@ class EcoRideMain:
         for status, count in maintenance_status.items():
             print(f"{status} : {count}")
         
+    def sort_vehicle(self, hub_name: str):
+        '''
+        Sorted vehicles by there name in ascending order in specified hub
+        
+        Parameter
+        ---------
+        hub_name: str
+            The name of the hub to which the vehicle to be sort.
+        
+        Returns
+        -------
+        bool
+            True
+                Successfull sort
+            False
+                Unsuccessfull sort
+        '''
+        #Check existance of hub
+        if not self.check_hub(hub_name):
+            return False
+        EcoRideMain.hubs[hub_name].sort()
+        return True
+    
 
-       
 
         
      

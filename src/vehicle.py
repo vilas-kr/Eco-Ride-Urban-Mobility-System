@@ -56,7 +56,13 @@ class Vehicle(ABC):
             return False
         return self.id == other.id
     
-        
+    def __lt__(self, other):
+        if not isinstance(other, Vehicle):
+            return False
+        return self.model < other.model
+    
+    def __str__(self):
+        return f"ID: {self.id}   Model: {self.model}    Battery Percentage: {self.battery_percentage}"
     
         
         
