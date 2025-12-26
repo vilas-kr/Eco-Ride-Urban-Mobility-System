@@ -1,4 +1,4 @@
-hub_name,vehicle_id,vehicle_type,model,battery_percentage,maintenance_status,rental_price,extra
+hub_name,id,type,model,battery_percentage,maintenance_status,rental_price,extra
 Bangalore,2003,ElectricScooter,Activa,99,AVAILABLE,230.0,120
 Bangalore,2001,ElectricCar,Tesla Model 3,90,AVAILABLE,500.0,5
 Bangalore,2004,ElectricScooter,Access 125,80,UNDER_MAINTENANCE,180.0,115

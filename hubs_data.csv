@@ -1,7 +1,0 @@
-hub_name,vehicle_id,vehicle_type,model,battery_percentage,maintenance_status,rental_price,extra
-vilas,3,ElectricScooter,farary,78,ON_TRIP,1500,100
-vilas,1,ElectricCar,verna,24,AVAILABLE,2000,6
-vilas,2,ElectricCar,bmw,24,ON_TRIP,500,6
-vinay,3,ElectricScooter,farary,78,ON_TRIP,1500,100
-vinay,1,ElectricCar,verna,24,AVAILABLE,2000,6
-vunay,2,ElectricCar,bmw,24,ON_TRIP,500,6
