@@ -255,7 +255,7 @@ class EcoRideMain:
 
                     # create hub if not exists
                     if hub_name not in EcoRideMain.hubs:
-                        EcoRideMain.hubs[hub_name] = []
+                        self.add_hub(hub_name)
 
                     vehicle_type = row["vehicle_type"]
                     vehicle_id = row["vehicle_id"]
@@ -306,6 +306,8 @@ class EcoRideMain:
                         vehicle = ElectricCar(v['id'], v['model'], int(v['battery_percentage']), int(v['seating_capacity']))
                     elif v['type'] == 'ElectricScooter':
                         vehicle = ElectricScooter(v['id'], v['model'], int(v['battery_percentage']), int(v['max_speed_limit']))
+                    else:
+                        continue
                         
                     vehicle.maintenance_status = Status[v['maintenance_status']]
                     vehicle.rental_price = float(v['rental_price'])
