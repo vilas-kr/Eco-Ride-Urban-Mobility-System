@@ -1,11 +1,14 @@
+import csv
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from vehicle import Vehicle
 from status import Status
 
+
 class EcoRideMain:
     
     hubs = {}
+        
     def greet(self):
         print("Welcome to Eco-Ride Urban Mobility System")
 
@@ -213,8 +216,69 @@ class EcoRideMain:
             return
         EcoRideMain.hubs[hub_name].sort(key = lambda vehicle: vehicle.battery_percentage , reverse = True)
         
-          
-       
+    def save_hubs_data_to_csv(self):
+        '''
+        Store hubs data into csv file
+        '''
+        with open("hubs_data.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            #header
+            writer.writerow([
+                "hub_name", "vehicle_id", "vehicle_type",
+                "model", "battery_percentage", "maintenance_status", "rental_price", "extra"
+            ])
+
+            for hub, vehicles in EcoRideMain.hubs.items():
+                for v in vehicles:
+                    writer.writerow([
+                        hub,
+                        v.id,
+                        v.__class__.__name__,
+                        v.model,
+                        v.battery_percentage,
+                        v.maintenance_status.name if v.maintenance_status else "UNKNOWN",
+                        v.rental_price,
+                        v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit
+                    ])
+            
+    def load_hubs_data_from_csv(self):
+        '''
+        Store csv file data back to hubs registory by creating objects
+        '''
+        try:
+            with open('hubs_data.csv', mode="r") as file:
+                reader = csv.DictReader(file)
+
+                for row in reader:
+                    hub_name = row['hub_name']
+
+                    # create hub if not exists
+                    if hub_name not in EcoRideMain.hubs:
+                        EcoRideMain.hubs[hub_name] = []
+
+                    vehicle_type = row["vehicle_type"]
+                    vehicle_id = row["vehicle_id"]
+                    model = row["model"]
+                    battery = int(row["battery_percentage"])
+                    status = Status[row["maintenance_status"]]
+                    rental_price = row['rental_price']
+
+
+                    # recreate correct object
+                    if vehicle_type == "ElectricCar":
+                        vehicle = ElectricCar(vehicle_id, model, battery, row['extra'])
+                    elif vehicle_type == "ElectricScooter":
+                        vehicle = ElectricScooter(vehicle_id, model, battery, row['extra'])
+                    else:
+                        continue
+                    vehicle.maintenance_status = status
+                    vehicle.rental_price = rental_price
+                    self.add_vehicle(hub_name, vehicle)
+
+        except FileNotFoundError:
+            print("No existing fleet data found. Starting fresh.")
+              
+
                     
                 
     
