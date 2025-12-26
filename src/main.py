@@ -1,6 +1,7 @@
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from vehicle import Vehicle
+from status import Status
 
 class EcoRideMain:
     
@@ -139,7 +140,41 @@ class EcoRideMain:
         
         return vehicle_type
 
+    def vehicle_maintenance_status(self, hub_name: str):
+        '''
+        Count status of all vehicles in the specified hub
+        
+        Parameter
+        ---------
+        hub_name : str
+            The name of the hub to which the vehicle status to be checked.
+        
+        Prints
+        ------
+            Summary of all vehicle maintenance status in the specified hub   
+        '''
+        #check for hub existance
+        if not self.check_hub:
+            return
+        
+        maintenance_status = {}
+        #initialize dictionary
+        for status in Status:
+            maintenance_status[status.name] = 0
+            
+        #Count vehicles by there maintenance status
+        for vehicle in EcoRideMain.hubs[hub_name]:
+            maintenance_status[vehicle.maintenance_status.name] += 1
+        
+        #print summary
+        print(f"Maintenance status of {hub_name} hub as below")
+        for status, count in maintenance_status.items():
+            print(f"{status} : {count}")
+        
 
+       
+
+        
      
              
                             

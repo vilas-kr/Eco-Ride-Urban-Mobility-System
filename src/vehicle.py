@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from status import Status
 class Vehicle(ABC):
     
     def __init__(self, id, model: str, battery_percentage: int):
@@ -13,7 +14,7 @@ class Vehicle(ABC):
         return self.__maintenance_status
     
     @maintenance_status.setter
-    def maintenance_status(self, maintenance_status):
+    def maintenance_status(self, maintenance_status: Status):
         self.__maintenance_status = maintenance_status
         
     @property
