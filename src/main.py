@@ -69,6 +69,7 @@ class EcoRideMain:
         if hub_name in EcoRideMain.hubs:
             if not any([vehicle == other for other in EcoRideMain.hubs[hub_name]]):
                 EcoRideMain.hubs[hub_name].append(vehicle)
+                self.sort_vehicle_by_battery(hub_name)
                 return True
             print("Duplicate vehicle ID detected")
         return False 
@@ -194,12 +195,26 @@ class EcoRideMain:
         EcoRideMain.hubs[hub_name].sort()
         return True
     
-
-
+    def sort_vehicle_by_battery(self, hub_name: str):
+        '''
+        Sort vehicle by battery percentage in decending order in the specified hub
         
-     
-             
-                            
+        Parameter
+        ---------
+        hub_name: str
+            Specify the hub name to be sort
+        
+        Modify
+        ------
+            sort the list of Vehicles by battery percentage
+        '''
+        #Check hub existance
+        if not self.check_hub(hub_name):
+            return
+        EcoRideMain.hubs[hub_name].sort(key = lambda vehicle: vehicle.battery_percentage , reverse = True)
+        
+          
+       
                     
                 
     

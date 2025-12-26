@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from status import Status
+
 class Vehicle(ABC):
     
     def __init__(self, id, model: str, battery_percentage: int):
@@ -58,7 +59,7 @@ class Vehicle(ABC):
     
     def __lt__(self, other):
         if not isinstance(other, Vehicle):
-            return False
+            return NotImplemented
         return self.model < other.model
     
     def __str__(self):
