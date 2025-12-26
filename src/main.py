@@ -1,4 +1,5 @@
 import csv
+import json
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from vehicle import Vehicle
@@ -216,11 +217,11 @@ class EcoRideMain:
             return
         EcoRideMain.hubs[hub_name].sort(key = lambda vehicle: vehicle.battery_percentage , reverse = True)
         
-    def save_hubs_data_to_csv(self):
+    def save_hub_registry_to_csv(self):
         '''
         Store hubs data into csv file
         '''
-        with open("hubs_data.csv", "w", newline="") as f:
+        with open("hub_data.csv", "w", newline="") as f:
             writer = csv.writer(f)
             #header
             writer.writerow([
@@ -241,12 +242,12 @@ class EcoRideMain:
                         v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit
                     ])
             
-    def load_hubs_data_from_csv(self):
+    def load_hub_registry_from_csv(self):
         '''
         Store csv file data back to hubs registory by creating objects
         '''
         try:
-            with open('hubs_data.csv', mode="r") as file:
+            with open('hub_data.csv', mode="r") as file:
                 reader = csv.DictReader(file)
 
                 for row in reader:
@@ -277,7 +278,9 @@ class EcoRideMain:
 
         except FileNotFoundError:
             print("No existing fleet data found. Starting fresh.")
-              
+    
+    
+
 
                     
                 
