@@ -4,7 +4,7 @@ class ElectricCar(Vehicle):
      
     def __init__(self, id: str, model: str, battery_percentage: int, seating_capacity: int):
          super().__init__(id, model, battery_percentage)
-         self.seating_capacity = seating_capacity
+         self.seating_capacity = int(seating_capacity)
          
     def calculate_trip_cost(self, distance: int):
         # 5 base price + $0.5 per km

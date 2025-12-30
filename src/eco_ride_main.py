@@ -1,11 +1,11 @@
 import csv
 import json
+
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from vehicle import Vehicle
 from status import Status
-
-
+    
 class EcoRideMain:
     
     hubs = {}

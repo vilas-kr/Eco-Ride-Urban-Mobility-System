@@ -4,7 +4,7 @@ class ElectricScooter(Vehicle):
      
     def __init__(self, id: str, model: str, battery_percentage: int, max_speed_limit: int):
          super().__init__(id, model, battery_percentage)
-         self.max_speed_limit = max_speed_limit
+         self.max_speed_limit = int(max_speed_limit)
          
     def calculate_trip_cost(self, distance: int):
         # 1 base price + $0.15 per km

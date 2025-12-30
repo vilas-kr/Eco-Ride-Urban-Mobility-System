@@ -4,7 +4,7 @@ from status import Status
 class Vehicle(ABC):
     
     def __init__(self, id: str, model: str, battery_percentage: int):
-        self.id = id
+        self.id = str(id)
         self.model = model
         self.battery_percentage = battery_percentage
         self.__maintenance_status = None
@@ -24,7 +24,7 @@ class Vehicle(ABC):
     
     @rental_price.setter
     def rental_price(self, rental_price: float):
-        self.__rental_price = rental_price
+        self.__rental_price = float(rental_price)
     
     @property
     def battery_percentage(self):
@@ -75,4 +75,6 @@ class Vehicle(ABC):
             'rental_price' : self.rental_price
         }
         
+    def __repr__(self):
+        return f"< id: {self.id} Battery Percentage: {self.battery_percentage} >"
 
