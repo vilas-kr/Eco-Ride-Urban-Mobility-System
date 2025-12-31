@@ -1,8 +1,13 @@
 import pytest
+import os
+import csv
+
 from eco_ride_main import EcoRideMain
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from status import Status
+
+
 class TestEcoRideMain:
     
     @pytest.fixture
@@ -65,7 +70,7 @@ class TestEcoRideMain:
     def d1(self):
         d1 = ElectricScooter(9190, 'Access 125', 88, 120)
         d1.maintenance_status = Status.AVAILABLE
-        d1.rental_price = 120
+        d1.rental_price = 150
         return d1
      
     @pytest.fixture
@@ -76,6 +81,10 @@ class TestEcoRideMain:
             "Mysore": [ m1 ],
             "Davangere": [ d1 ]
         }
+        return EcoRideMain()
+    
+    @pytest.fixture
+    def eco_empty(self):
         return EcoRideMain()
     
     def test_add_hub(self, eco):
@@ -125,6 +134,39 @@ class TestEcoRideMain:
     def test_sort_vehicle_by_battery(self, eco, b1, b2, b3, b4):
         eco.sort_vehicle_by_battery('Bangalore')
         assert EcoRideMain.hubs['Bangalore'] == [b1, b3, b4, b2]
+        
+    def test_save_hub_registry_to_csv(self, eco):
+        eco.save_hub_registry_to_csv('test_hub_data.csv')
+        assert os.path.exists('test_hub_data.csv')
+    
+    def test_csv_data(self):
+        with open('test_hub_data.csv', 'r') as f:
+            assert f.readline() == f"hub_name,id,type,model,battery_percentage,maintenance_status,rental_price,extra\n"
+            for hub in EcoRideMain.hubs:
+                for v in EcoRideMain.hubs[hub]:
+                    assert f.readline() == f'{hub},{v.id},{v.__class__.__name__},{v.model},{v.battery_percentage},{v.maintenance_status.name if v.maintenance_status else None},{v.rental_price},{v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit}\n'
+                    
+    def test_load_hub_registry_from_csv(self, eco_empty):
+        assert os.path.exists("test_hub_data.csv")
+        eco_empty.load_hub_registry_from_csv('test_hub_data.csv')
+        with open('test_hub_data.csv', 'r') as f:
+            details = csv.DictReader(f)
+            for hub_name in EcoRideMain.hubs:
+                for v, vehicleDetails in zip(EcoRideMain.hubs[hub_name], details):
+                    assert hub_name == vehicleDetails['hub_name']
+                    assert v.id == str(vehicleDetails['id'])
+                    assert v.model == vehicleDetails['model']
+                    assert v.battery_percentage == int(vehicleDetails['battery_percentage'])
+                    assert v.maintenance_status == Status[vehicleDetails['maintenance_status']]
+                    assert v.rental_price == float(vehicleDetails['rental_price'])
+                    assert v.__class__.__name__ == vehicleDetails['type']
+                    assert v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit == int(vehicleDetails['extra'])
+            
+            
+            
+        
+        
+    
         
         
     

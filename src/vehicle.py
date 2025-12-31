@@ -24,7 +24,7 @@ class Vehicle(ABC):
     
     @rental_price.setter
     def rental_price(self, rental_price: float):
-        self.__rental_price = float(rental_price)
+        self.__rental_price = rental_price
     
     @property
     def battery_percentage(self):

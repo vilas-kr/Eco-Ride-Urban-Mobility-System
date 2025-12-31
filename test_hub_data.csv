@@ -1,0 +1,10 @@
+hub_name,id,type,model,battery_percentage,maintenance_status,rental_price,extra
+Bangalore,2003,ElectricScooter,Activa,99,AVAILABLE,230,120
+Bangalore,2001,ElectricCar,Tesla Model 3,50,AVAILABLE,500,5
+Bangalore,2004,ElectricScooter,Access 125,81,UNDER_MAINTENANCE,180,115
+Bangalore,2002,ElectricCar,Creta,78,ON_TRIP,600,5
+Hubli,1901,ElectricCar,Lamborgini,98,AVAILABLE,1300,4
+Hubli,1903,ElectricScooter,R15 V4,88,ON_TRIP,350,155
+Hubli,1902,ElectricScooter,Ola S1 Pro,60,UNDER_MAINTENANCE,160,90
+Mysore,3404,ElectricCar,MG ZS EV,95,AVAILABLE,550,5
+Davangere,9190,ElectricScooter,Access 125,88,AVAILABLE,,120

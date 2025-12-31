@@ -217,11 +217,11 @@ class EcoRideMain:
             return
         EcoRideMain.hubs[hub_name].sort(key = lambda vehicle: vehicle.battery_percentage , reverse = True)
         
-    def save_hub_registry_to_csv(self):
+    def save_hub_registry_to_csv(self, filename = 'hub_data.csv'):
         '''
         Store hubs data into csv file
         '''
-        with open("hub_data.csv", "w", newline="") as f:
+        with open(filename, "w", newline="") as f:
             writer = csv.writer(f)
             #header
             writer.writerow([
@@ -242,12 +242,12 @@ class EcoRideMain:
                         v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit
                     ])
             
-    def load_hub_registry_from_csv(self):
+    def load_hub_registry_from_csv(self, filename = 'hub_data.csv'):
         '''
         Store csv file data back to hubs registory by creating objects
         '''
         try:
-            with open('hub_data.csv', mode="r") as file:
+            with open(filename, mode="r") as file:
                 reader = csv.DictReader(file)
 
                 for row in reader:
@@ -266,25 +266,25 @@ class EcoRideMain:
                     else:
                         continue
                     vehicle.maintenance_status = Status[row["maintenance_status"]]
-                    vehicle.rental_price = float(row["rental_price"])
+                    vehicle.rental_price = float(row["rental_price"])  
                     self.add_vehicle(hub_name, vehicle)
 
         except FileNotFoundError:
             print("No existing fleet data found. Starting fresh.")
     
-    def save_hub_registry_to_json(self):
+    def save_hub_registry_to_json(self, filename = 'hub_data.json'):
         '''
         Store hub registry in the json file
         '''
-        with open("hub_data.json", "w") as f:
+        with open(filename, "w") as f:
             json.dump({hub_name : [vehicle.to_dict() for vehicle in EcoRideMain.hubs[hub_name]] for hub_name in EcoRideMain.hubs}, f, indent=4)
         
-    def load_hub_registry_from_json(self):
+    def load_hub_registry_from_json(self, filename = 'hub_data.json'):
         '''
         load object from the hub registory
         '''
         try:
-            with open("hub_data.json", "r") as f:
+            with open(filename, "r") as f:
                 data = json.load(f)
             
             for hub_name in data:

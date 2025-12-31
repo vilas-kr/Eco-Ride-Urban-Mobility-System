@@ -52,3 +52,5 @@ class TestElectricScooter:
         assert dict['max_speed_limit'] == scooter.max_speed_limit
         
         
+        
+        
