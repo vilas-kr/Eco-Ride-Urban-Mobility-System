@@ -1,6 +1,7 @@
 import pytest
 import os
 import csv
+import json
 
 from eco_ride_main import EcoRideMain
 from electric_car import ElectricCar
@@ -162,9 +163,108 @@ class TestEcoRideMain:
                     assert v.__class__.__name__ == vehicleDetails['type']
                     assert v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit == int(vehicleDetails['extra'])
             
+    def test_csv_exception(self, eco):
+        with pytest.raises(FileNotFoundError):
+            eco.load_hub_registry_from_csv('abc.csv')  
+    
+    @pytest.fixture
+    def json_data(self):
+        return '''{
+    "Bangalore": [
+        {
+            "id": "2003",
+            "type": "ElectricScooter",
+            "model": "Activa",
+            "battery_percentage": 99,
+            "maintenance_status": "AVAILABLE",
+            "rental_price": 230,
+            "max_speed_limit": 120
+        },
+        {
+            "id": "2001",
+            "type": "ElectricCar",
+            "model": "Tesla Model 3",
+            "battery_percentage": 50,
+            "maintenance_status": "AVAILABLE",
+            "rental_price": 500,
+            "seating_capacity": 5
+        },
+        {
+            "id": "2004",
+            "type": "ElectricScooter",
+            "model": "Access 125",
+            "battery_percentage": 81,
+            "maintenance_status": "UNDER_MAINTENANCE",
+            "rental_price": 180,
+            "max_speed_limit": 115
+        },
+        {
+            "id": "2002",
+            "type": "ElectricCar",
+            "model": "Creta",
+            "battery_percentage": 78,
+            "maintenance_status": "ON_TRIP",
+            "rental_price": 600,
+            "seating_capacity": 5
+        }
+    ],
+    "Hubli": [
+        {
+            "id": "1901",
+            "type": "ElectricCar",
+            "model": "Lamborgini",
+            "battery_percentage": 98,
+            "maintenance_status": "AVAILABLE",
+            "rental_price": 1300,
+            "seating_capacity": 4
+        },
+        {
+            "id": "1903",
+            "type": "ElectricScooter",
+            "model": "R15 V4",
+            "battery_percentage": 88,
+            "maintenance_status": "ON_TRIP",
+            "rental_price": 350,
+            "max_speed_limit": 155
+        },
+        {
+            "id": "1902",
+            "type": "ElectricScooter",
+            "model": "Ola S1 Pro",
+            "battery_percentage": 60,
+            "maintenance_status": "UNDER_MAINTENANCE",
+            "rental_price": 160,
+            "max_speed_limit": 90
+        }
+    ],
+    "Mysore": [
+        {
+            "id": "3404",
+            "type": "ElectricCar",
+            "model": "MG ZS EV",
+            "battery_percentage": 95,
+            "maintenance_status": "AVAILABLE",
+            "rental_price": 550,
+            "seating_capacity": 5
+        }
+    ],
+    "Davangere": [
+        {
+            "id": "9190",
+            "type": "ElectricScooter",
+            "model": "Access 125",
+            "battery_percentage": 88,
+            "maintenance_status": "AVAILABLE",
+            "rental_price": 150,
+            "max_speed_limit": 120
+        }
+    ]
+}'''
             
-            
-        
+    def test_save_hub_registry_to_json(self, eco, json_data):
+        eco.save_hub_registry_to_json('test_hub_data.json')
+        with open('test_hub_data.json', 'r') as f:
+            assert f.read() == json_data
         
     
         

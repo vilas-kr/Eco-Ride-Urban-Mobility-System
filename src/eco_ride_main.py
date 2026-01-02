@@ -267,10 +267,10 @@ class EcoRideMain:
                         continue
                     vehicle.maintenance_status = Status[row["maintenance_status"]]
                     vehicle.rental_price = float(row["rental_price"])  
-                    self.add_vehicle(hub_name, vehicle)
 
-        except FileNotFoundError:
-            print("No existing fleet data found. Starting fresh.")
+        except FileNotFoundError as e:
+            raise e
+            
     
     def save_hub_registry_to_json(self, filename = 'hub_data.json'):
         '''
