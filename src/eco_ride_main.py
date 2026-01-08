@@ -217,7 +217,7 @@ class EcoRideMain:
             return
         EcoRideMain.hubs[hub_name].sort(key = lambda vehicle: vehicle.battery_percentage , reverse = True)
         
-    def save_hub_registry_to_csv(self, filename = 'hub_data.csv'):
+    def save_hub_registry_to_csv(self, filename = 'data/hub_data.csv'):
         '''
         Store hubs data into csv file
         '''
@@ -242,7 +242,7 @@ class EcoRideMain:
                         v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit
                     ])
             
-    def load_hub_registry_from_csv(self, filename = 'hub_data.csv'):
+    def load_hub_registry_from_csv(self, filename = 'data/hub_data.csv'):
         '''
         Store csv file data back to hubs registory by creating objects
         '''
@@ -272,14 +272,14 @@ class EcoRideMain:
             raise e
             
     
-    def save_hub_registry_to_json(self, filename = 'hub_data.json'):
+    def save_hub_registry_to_json(self, filename = 'data/hub_data.json'):
         '''
         Store hub registry in the json file
         '''
         with open(filename, "w") as f:
             json.dump({hub_name : [vehicle.to_dict() for vehicle in EcoRideMain.hubs[hub_name]] for hub_name in EcoRideMain.hubs}, f, indent=4)
         
-    def load_hub_registry_from_json(self, filename = 'hub_data.json'):
+    def load_hub_registry_from_json(self, filename = 'data/hub_data.json'):
         '''
         load object from the hub registory
         '''

@@ -137,20 +137,20 @@ class TestEcoRideMain:
         assert EcoRideMain.hubs['Bangalore'] == [b1, b3, b4, b2]
         
     def test_save_hub_registry_to_csv(self, eco):
-        eco.save_hub_registry_to_csv('test_hub_data.csv')
-        assert os.path.exists('test_hub_data.csv')
+        eco.save_hub_registry_to_csv('test/test-data/test_hub_data.csv')
+        assert os.path.exists('test/test-data/test_hub_data.csv')
     
     def test_csv_data(self):
-        with open('test_hub_data.csv', 'r') as f:
+        with open('test/test-data/test_hub_data.csv', 'r') as f:
             assert f.readline() == f"hub_name,id,type,model,battery_percentage,maintenance_status,rental_price,extra\n"
             for hub in EcoRideMain.hubs:
                 for v in EcoRideMain.hubs[hub]:
                     assert f.readline() == f'{hub},{v.id},{v.__class__.__name__},{v.model},{v.battery_percentage},{v.maintenance_status.name if v.maintenance_status else None},{v.rental_price},{v.seating_capacity if isinstance(v, ElectricCar) else v.max_speed_limit}\n'
                     
     def test_load_hub_registry_from_csv(self, eco_empty):
-        assert os.path.exists("test_hub_data.csv")
-        eco_empty.load_hub_registry_from_csv('test_hub_data.csv')
-        with open('test_hub_data.csv', 'r') as f:
+        assert os.path.exists("test/test-data/test_hub_data.csv")
+        eco_empty.load_hub_registry_from_csv('test/test-data/test_hub_data.csv')
+        with open('test/test-data/test_hub_data.csv', 'r') as f:
             details = csv.DictReader(f)
             for hub_name in EcoRideMain.hubs:
                 for v, vehicleDetails in zip(EcoRideMain.hubs[hub_name], details):
@@ -262,8 +262,8 @@ class TestEcoRideMain:
 }'''
             
     def test_save_hub_registry_to_json(self, eco, json_data):
-        eco.save_hub_registry_to_json('test_hub_data.json')
-        with open('test_hub_data.json', 'r') as f:
+        eco.save_hub_registry_to_json('test/test-data/test_hub_data.json')
+        with open('test/test-data/test_hub_data.json', 'r') as f:
             assert f.read() == json_data
         
     
