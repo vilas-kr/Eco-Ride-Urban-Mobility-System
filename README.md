@@ -49,7 +49,7 @@ Eco-Ride-Urban-Mobility-System
 ```
 
 ## Installation
-
+```
 Clone the repository
 -> git clone https://github.com/vilas-kr/Eco-Ride-Urban-Mobility-System.git
 
@@ -61,7 +61,7 @@ Install dependencies
 
 Run the application
 -> python main.py
-
+```
 
 ## Author
 ```
